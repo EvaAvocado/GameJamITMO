@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class LadderManager : MonoBehaviour
 {
-    public Ladder[] ladders;
+    public GameObject[] spawnPoints;
 }

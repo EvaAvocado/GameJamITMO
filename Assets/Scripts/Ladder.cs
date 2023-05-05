@@ -59,18 +59,21 @@ public class Ladder : MonoBehaviour
         }
     }
 
-    public void TransferToFirstFloor(GameObject creature)
+    private void TransferToFirstFloor(GameObject creature)
     {
-        creature.transform.position = _ladderManager.ladders[0].transform.position;
+        creature.transform.position = _ladderManager.spawnPoints[0].transform.position;
+        _player.currentFloor = Creature.CurrentFloor.First;
     }
-    
-    public void TransferToSecondFloor(GameObject creature)
+
+    private void TransferToSecondFloor(GameObject creature)
     {
-        creature.transform.position = _ladderManager.ladders[1].transform.position;
+        creature.transform.position = _ladderManager.spawnPoints[1].transform.position;
+        _player.currentFloor = Creature.CurrentFloor.Second;
     }
-    
-    public void TransferToThirdFloor(GameObject creature)
+
+    private void TransferToThirdFloor(GameObject creature)
     {
-        creature.transform.position = _ladderManager.ladders[2].transform.position;
+        creature.transform.position = _ladderManager.spawnPoints[2].transform.position;
+        _player.currentFloor = Creature.CurrentFloor.Third;
     }
 }
