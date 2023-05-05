@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputSystem : MonoBehaviour
+public class Input : MonoBehaviour
 {
     public void OnMove(InputAction.CallbackContext callbackContext)
     {
