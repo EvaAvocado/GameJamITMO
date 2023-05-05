@@ -11,7 +11,8 @@
                     "id": "ef3519e5-b57f-48a5-a685-9b1df11e3447",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Intetact",
@@ -19,7 +20,8 @@
                     "id": "3fcfe37d-d67f-47c9-89d1-13a6be855e2a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -136,7 +138,7 @@
                 {
                     "name": "",
                     "id": "89db12d6-7a5f-44eb-95ad-15d3f9608f38",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
