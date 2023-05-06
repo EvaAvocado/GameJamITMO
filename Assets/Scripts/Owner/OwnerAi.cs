@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -6,17 +7,22 @@ using Random = UnityEngine.Random;
 public class OwnerAi : Owner
 {
     [SerializeField] private Player _target;
-    [SerializeField] private Transform[] _movePoints;
+    [SerializeField] private Cooldown _cooldown;
+    [SerializeField] private Ladder _ladder;
+    [SerializeField] private FirstFloor _firstFloor;
+    [SerializeField] private SecondFloor _secondFloor;
+    [SerializeField] private ThirdFloor _thirdFloor;
+    //[SerializeField] private Transform[] _movePoints;
 
     [SerializeField] private float _minIdleTime = 1f;
     [SerializeField] private float _maxIdleTime = 3f;
     [SerializeField] private float _delay = 0.5f;
     [SerializeField] private float _patrolDuration = 20f;
 
-    private TestPatrollingStatecs _patrollingStatecs;
-
     private Rigidbody2D _rigidbody;
-    private int _randomPoint;
+    private int _randomPoint1;
+    private int _randomPoint2;
+    private int _randomPoint3;
     private float _currentTime = 0;
     private float _idleTime = 0f;
     private bool _isDormantStateOff = false;
@@ -25,27 +31,35 @@ public class OwnerAi : Owner
     private Coroutine _coroutine;
     private int _currentPointIndex;
 
+    public enum FlorPoints
+    {
+        firstFlorPoints,
+        secondFlorPoints,
+        thirdFlorPoints
+    }
+
     private void Awake()
     {
-        _patrollingStatecs = GetComponent<TestPatrollingStatecs>();
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
         _coroutine = StartCoroutine(Patrol());
-        _randomPoint = Random.Range(0, _movePoints.Length);
+        _randomPoint1 = Random.Range(0, _firstFloor.MovePoints.Length);
+        _randomPoint2 = Random.Range(0, _secondFloor.MovePoints.Length);
+        _randomPoint3 = Random.Range(0, _thirdFloor.MovePoints.Length);
+
         CurrentSpeed = Speed;
+        _cooldown.Reset();
     }
 
     private void Update()
     {
-        //_currentTime += Time.deltaTime;
-
-        //if (_isDormantStateOff)
-        //{
-        //    _patrollingStatecs.EnterBehavior();
-        //}
+        if (_cooldown.IsReady)
+        {
+            isCanMoveToAnotherFloor = true;
+        }
     }
 
     public void IdleState()
@@ -87,26 +101,47 @@ public class OwnerAi : Owner
     private IEnumerator Patrol()
     {
         Vector3 currentPosition = transform.position;
-        Vector3 targetPosition = _movePoints[_currentPointIndex].position;
+        Vector3 targetPositionFirstFloor = _firstFloor.MovePoints[_randomPoint1].position;
+        Vector3 targetPositionSecondFloor = _secondFloor.MovePoints[_randomPoint2].position;
+        Vector3 targetPositionThirdFloor = _thirdFloor.MovePoints[_randomPoint3].position;
 
         while (_currentTime <= _patrolDuration)
         {
             // проверяем, достигли ли мы текущей цели (точки патруля)
-            if (transform.position == targetPosition)
+            if (transform.position == targetPositionFirstFloor || transform.position == targetPositionSecondFloor || transform.position == targetPositionThirdFloor)
             {
                 // выбираем следующую точку патруля
-                _randomPoint = Random.Range(0, _movePoints.Length);
-                targetPosition = _movePoints[_randomPoint].position;
+                _randomPoint1 = Random.Range(0, _firstFloor.MovePoints.Length);
+                _randomPoint2 = Random.Range(0, _secondFloor.MovePoints.Length);
+                _randomPoint3 = Random.Range(0, _thirdFloor.MovePoints.Length);
+
+                if (currentFloor == CurrentFloor.First)
+                    targetPositionFirstFloor = _firstFloor.MovePoints[_randomPoint1].position;
+                else if (currentFloor == CurrentFloor.Second)
+                    targetPositionSecondFloor = _secondFloor.MovePoints[_randomPoint2].position;
+                else if (currentFloor == CurrentFloor.Third)
+                    targetPositionThirdFloor = _thirdFloor.MovePoints[_randomPoint3].position;
             }
 
             _currentTime += Time.deltaTime;
 
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, CurrentSpeed * Time.deltaTime);
+            if (currentFloor == CurrentFloor.First)
+                transform.position = Vector2.MoveTowards(transform.position, targetPositionFirstFloor, Speed * Time.deltaTime);
+            else if (currentFloor == CurrentFloor.Second)
+                transform.position = Vector2.MoveTowards(transform.position, targetPositionSecondFloor, Speed * Time.deltaTime);
+            else if (currentFloor == CurrentFloor.Third)
+                transform.position = Vector2.MoveTowards(transform.position, targetPositionThirdFloor, Speed * Time.deltaTime);
 
-            // направляемся к текущей цели (точке патруля)
-            //Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, Speed * Time.deltaTime);
-            //_rigidbody.MovePosition(newPosition);
-            //_rigidbody.velocity = (targetPosition - transform.position).normalized * Speed;
+            //if (isCanMoveToAnotherFloor)
+            //{
+            //    _ladder.MoveToAnotherFloorForNpc();
+            //}
+            {
+                // направляемся к текущей цели (точке патруля)
+                //Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, Speed * Time.deltaTime);
+                //_rigidbody.MovePosition(newPosition);
+                //_rigidbody.velocity = (targetPosition - transform.position).normalized * Speed;
+            }
 
             yield return null;
         }

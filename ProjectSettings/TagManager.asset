@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Thing
+  - Owner
   layers:
   - Default
   - TransparentFX

@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 61499942}
   m_Layer: 0
   m_Name: Owner
-  m_TagString: Untagged
+  m_TagString: Owner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -226,12 +226,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 3
   currentFloor: 0
-  _target: {fileID: 481458687}
-  _movePoints:
-  - {fileID: 1032090764}
-  - {fileID: 484805282}
-  - {fileID: 919367151}
-  - {fileID: 825794952}
+  isCanMoveToAnotherFloor: 0
+  _target: {fileID: 0}
+  _cooldown: {fileID: 309932675}
+  _ladder: {fileID: 488547383}
+  _firstFloor: {fileID: 2038084395}
+  _secondFloor: {fileID: 195887503}
+  _thirdFloor: {fileID: 1803669758}
   _minIdleTime: 3
   _maxIdleTime: 6
   _delay: 0.5
@@ -384,6 +385,100 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 0.25}
   m_EdgeRadius: 0
+--- !u!1 &195887501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 195887502}
+  - component: {fileID: 195887503}
+  m_Layer: 0
+  m_Name: secondFlorPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &195887502
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195887501}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 919367151}
+  - {fileID: 817304109}
+  m_Father: {fileID: 1181545884}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &195887503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195887501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6545ea3e4283f4ca9ca80720e3e4bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MovePoints:
+  - {fileID: 919367151}
+  - {fileID: 817304109}
+--- !u!1 &309932674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 309932676}
+  - component: {fileID: 309932675}
+  m_Layer: 0
+  m_Name: Cooldown
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &309932675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309932674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ebf5a1fd54f8e448ee60b3e54b1077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _valueOfCooldown: 5
+--- !u!4 &309932676
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309932674}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.114083, y: 2.9139671, z: -0.15185635}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &320060157
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +492,8 @@ GameObject:
   - component: {fileID: 320060161}
   - component: {fileID: 320060160}
   - component: {fileID: 320060159}
+  - component: {fileID: 320060164}
+  - component: {fileID: 320060163}
   m_Layer: 0
   m_Name: Ladder3
   m_TagString: Untagged
@@ -416,9 +513,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4bcd1405adcc24a88065d368592e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
-  _owner: {fileID: 0}
-  _ladderManager: {fileID: 0}
+  _player: {fileID: 481458687}
+  _owner: {fileID: 61499939}
+  _ladderManager: {fileID: 1209470776}
+  _cooldown: {fileID: 309932675}
   playerInInteractionZone: 0
   ownerInInteractionZone: 0
 --- !u!114 &320060159
@@ -477,6 +575,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  OnTriggerEnterOnly: 0
 --- !u!61 &320060161
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -516,9 +615,67 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1565480314}
+  - {fileID: 2115288682}
   m_Father: {fileID: 781075418}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &320060163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320060157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 198d99c86014d0b4299f3b41996da9f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: Owner
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 320060158}
+        m_TargetAssemblyTypeName: Ladder, Assembly-CSharp
+        m_MethodName: SetOwnerInInteractionZone
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &320060164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320060157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a4d791a20a9544499cf6b444b992ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: Owner
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 320060158}
+        m_TargetAssemblyTypeName: Ladder, Assembly-CSharp
+        m_MethodName: SetOwnerInInteractionZone
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnTriggerEnterOnly: 0
 --- !u!1 &332673255
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,7 +773,7 @@ GameObject:
   - component: {fileID: 363684147}
   m_Layer: 0
   m_Name: Capsule (1)
-  m_TagString: Untagged
+  m_TagString: Owner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -714,6 +871,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &382057619
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 382057620}
+  m_Layer: 0
+  m_Name: Point1 (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &382057620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382057619}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.73, y: 6.67, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1803669757}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &481458686
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +934,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 2
   currentFloor: 0
+  jumpHeight: 0
+  isGrounded: 1
 --- !u!212 &481458688
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -836,12 +1026,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 484805281}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.11, y: -4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1181545884}
+  m_Father: {fileID: 2038084394}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &488547378
@@ -857,6 +1047,8 @@ GameObject:
   - component: {fileID: 488547382}
   - component: {fileID: 488547381}
   - component: {fileID: 488547380}
+  - component: {fileID: 488547384}
+  - component: {fileID: 488547385}
   m_Layer: 0
   m_Name: Ladder1
   m_TagString: Untagged
@@ -877,6 +1069,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 332673256}
+  - {fileID: 1732679800}
   m_Father: {fileID: 781075418}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -936,6 +1129,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  OnTriggerEnterOnly: 0
 --- !u!61 &488547382
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -974,11 +1168,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4bcd1405adcc24a88065d368592e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
-  _owner: {fileID: 0}
-  _ladderManager: {fileID: 0}
+  _player: {fileID: 481458687}
+  _owner: {fileID: 61499939}
+  _ladderManager: {fileID: 1209470776}
+  _cooldown: {fileID: 309932675}
   playerInInteractionZone: 0
   ownerInInteractionZone: 0
+--- !u!114 &488547384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488547378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a4d791a20a9544499cf6b444b992ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: Owner
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 488547383}
+        m_TargetAssemblyTypeName: Ladder, Assembly-CSharp
+        m_MethodName: SetOwnerInInteractionZone
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnTriggerEnterOnly: 0
+--- !u!114 &488547385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488547378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 198d99c86014d0b4299f3b41996da9f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: Owner
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 488547383}
+        m_TargetAssemblyTypeName: Ladder, Assembly-CSharp
+        m_MethodName: SetOwnerInInteractionZone
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &553064409
 GameObject:
   m_ObjectHideFlags: 0
@@ -1102,7 +1354,7 @@ GameObject:
   - component: {fileID: 557193178}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Owner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1533,6 +1785,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &817304108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 817304109}
+  m_Layer: 0
+  m_Name: Point1 (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &817304109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817304108}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.97, y: 0.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 195887502}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &825794951
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,13 +1839,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825794951}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.81, y: -4, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.11, y: -4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1181545884}
-  m_RootOrder: 3
+  m_Father: {fileID: 2038084394}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &838260918
 GameObject:
@@ -2031,13 +2314,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919367150}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.73, y: -4, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.73, y: 0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1181545884}
-  m_RootOrder: 2
+  m_Father: {fileID: 195887502}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1032090763
 GameObject:
@@ -2062,12 +2345,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032090763}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.4, y: -4, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.38, y: -4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1181545884}
+  m_Father: {fileID: 2038084394}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1150244027
@@ -2209,10 +2492,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1032090764}
-  - {fileID: 484805282}
-  - {fileID: 919367151}
-  - {fileID: 825794952}
+  - {fileID: 2038084394}
+  - {fileID: 195887502}
+  - {fileID: 1803669757}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2260,10 +2542,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356dff6fc1bfcb74da16ae574ed6ec9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ladders:
-  - {fileID: 488547383}
-  - {fileID: 1674243356}
-  - {fileID: 320060158}
+  spawnPoints:
+  - {fileID: 1732679799}
+  - {fileID: 1981559256}
+  - {fileID: 2115288681}
+--- !u!1 &1272397399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1272397400}
+  m_Layer: 0
+  m_Name: Point1 (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1272397400
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272397399}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.72, y: 6.67, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1803669757}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1460593089
 GameObject:
   m_ObjectHideFlags: 0
@@ -2694,6 +3007,8 @@ GameObject:
   - component: {fileID: 1674243355}
   - component: {fileID: 1674243354}
   - component: {fileID: 1674243353}
+  - component: {fileID: 1674243358}
+  - component: {fileID: 1674243357}
   m_Layer: 0
   m_Name: Ladder2
   m_TagString: Untagged
@@ -2714,6 +3029,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 692927372}
+  - {fileID: 1981559257}
   m_Father: {fileID: 781075418}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2773,6 +3089,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  OnTriggerEnterOnly: 0
 --- !u!61 &1674243355
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2811,11 +3128,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4bcd1405adcc24a88065d368592e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
-  _owner: {fileID: 0}
-  _ladderManager: {fileID: 0}
+  _player: {fileID: 481458687}
+  _owner: {fileID: 61499939}
+  _ladderManager: {fileID: 1209470776}
+  _cooldown: {fileID: 309932675}
   playerInInteractionZone: 0
   ownerInInteractionZone: 0
+--- !u!114 &1674243357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674243351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 198d99c86014d0b4299f3b41996da9f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: Owner
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1674243356}
+        m_TargetAssemblyTypeName: Ladder, Assembly-CSharp
+        m_MethodName: SetOwnerInInteractionZone
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1674243358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674243351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a4d791a20a9544499cf6b444b992ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: Owner
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1674243356}
+        m_TargetAssemblyTypeName: Ladder, Assembly-CSharp
+        m_MethodName: SetOwnerInInteractionZone
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnTriggerEnterOnly: 0
 --- !u!1 &1680847126
 GameObject:
   m_ObjectHideFlags: 0
@@ -2927,6 +3302,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 0.25}
   m_EdgeRadius: 0
+--- !u!1 &1732679799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1732679800}
+  m_Layer: 0
+  m_Name: OwnerSoawnPoint1
+  m_TagString: Untagged
+  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1732679800
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732679799}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.97, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 488547379}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1775876498
 GameObject:
   m_ObjectHideFlags: 0
@@ -2973,6 +3379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ladders: []
+  _player: {fileID: 0}
 --- !u!114 &1775876501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3035,3 +3442,165 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!1 &1803669756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1803669757}
+  - component: {fileID: 1803669758}
+  m_Layer: 0
+  m_Name: thirdFlorPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1803669757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803669756}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1272397400}
+  - {fileID: 382057620}
+  m_Father: {fileID: 1181545884}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1803669758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803669756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38bb9b05ab4ef804ead859fd58c1e1b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MovePoints:
+  - {fileID: 1272397400}
+  - {fileID: 382057620}
+--- !u!1 &1981559256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1981559257}
+  m_Layer: 0
+  m_Name: OwnerSoawnPoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1981559257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981559256}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.97, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1674243352}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2038084393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2038084394}
+  - component: {fileID: 2038084395}
+  m_Layer: 0
+  m_Name: firstFlorPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2038084394
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038084393}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1032090764}
+  - {fileID: 484805282}
+  - {fileID: 825794952}
+  m_Father: {fileID: 1181545884}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2038084395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038084393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7cccc5d3b23644bb97d4c0cab8074a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MovePoints:
+  - {fileID: 1032090764}
+  - {fileID: 484805282}
+  - {fileID: 825794952}
+--- !u!1 &2115288681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2115288682}
+  m_Layer: 0
+  m_Name: OwnerSoawnPoint3
+  m_TagString: Untagged
+  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2115288682
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115288681}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.95, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 320060162}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
