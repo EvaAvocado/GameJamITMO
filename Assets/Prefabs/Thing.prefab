@@ -391,7 +391,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickCount: 15
-  points: 15
+  currentClickCount: 0
+  points: 5
+  currentPoints: 0
   _state: 0
   _isPlayerInZone: 0
   _action:

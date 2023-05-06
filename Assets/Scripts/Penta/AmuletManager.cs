@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -13,12 +12,12 @@ public class AmuletManager : MonoBehaviour
 
     [SerializeField] private Thing[] _things;
 
-    [Header("MorePoints Amulet")] [SerializeField]
+    /*[Header("MorePoints Amulet")] [SerializeField]
     private Cooldown _cooldownMorePoints;
 
     [SerializeField] private bool _isCanBeMorePoints = true;
     [SerializeField] private Slider _sliderMorePoints;
-    [SerializeField] private TimerComponent _timerMorePoints;
+    [SerializeField] private TimerComponent _timerMorePoints;*/
 
     public enum AmuletState
     {
@@ -30,13 +29,25 @@ public class AmuletManager : MonoBehaviour
         Uselessness,
         RandomRoom
     }
-
-    private void Awake()
+    
+    public Thing[] Things
     {
-        _timerMorePoints.TimeFloat = TimeSpan.FromSeconds(_cooldownMorePoints.ValueOfCooldown).Seconds;
+        get { return _things; }
+        set { _things = value; }
     }
 
-    private void Update()
+    public Amulet CurrentAmulet
+    {
+        get { return _currentAmulet; }
+        set { _currentAmulet = value; }
+    }
+
+    /*private void Awake()
+    {
+        _timerMorePoints.TimeFloat = TimeSpan.FromSeconds(_cooldownMorePoints.ValueOfCooldown).Seconds;
+    }*/
+
+    /*private void Update()
     {
         if (_currentAmuletState == AmuletState.MorePoints)
         {
@@ -49,16 +60,17 @@ public class AmuletManager : MonoBehaviour
             } 
         }
         
-    }
+    }*/
 
     private void ApplyEffect()
     {
         if (_currentAmuletState == AmuletState.Nothing) return;
-
-        switch (_currentAmuletState)
+        _currentAmulet.SetEffect();
+        
+        /*switch (_currentAmuletState)
         {
             case AmuletState.MorePoints:
-                SetMorePointsEffect();
+                _currentAmulet.SetEffect();
                 break;
             case AmuletState.LessClicks:
                 //
@@ -75,10 +87,10 @@ public class AmuletManager : MonoBehaviour
             case AmuletState.RandomRoom:
                 //
                 break;
-        }
+        }*/
     }
 
-    private void SetMorePointsEffect()
+    /*private void SetMorePointsEffect()
     {
         if (_isCanBeMorePoints)
         {
@@ -90,16 +102,20 @@ public class AmuletManager : MonoBehaviour
             _timerMorePoints.DoAction = true;
             _isCanBeMorePoints = false;
         }
-    }
+    }*/
 
-    private void ResetCurrentAmulet()
+    public void ResetCurrentAmulet()
     {
         _currentAmuletState = AmuletState.Nothing;
+        _currentAmulet = null;
     }
 
     public void SpawnNewRandomAmulet()
     {
-        ResetMorePoints();
+        foreach (var amulet in _amulets)
+        {
+            amulet.Reset();
+        }
 
         ChooseCurrentAmulet();
         SpawnCurrentAmulet();
@@ -158,7 +174,7 @@ public class AmuletManager : MonoBehaviour
         return Enumerable.Range(v1, v2).Contains(value);
     }
 
-    private void ResetMorePoints()
+    /*private void ResetMorePoints()
     {
         foreach (var thing in _things)
         {
@@ -176,5 +192,5 @@ public class AmuletManager : MonoBehaviour
         _timerMorePoints.DoAction = false;
         _cooldownMorePoints.Reset();
         _isCanBeMorePoints = true;
-    }
+    }*/
 }

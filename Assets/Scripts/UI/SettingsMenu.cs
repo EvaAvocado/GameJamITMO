@@ -1,8 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
+    [SerializeField] private Slider _musicSlider;
+    [SerializeField] private Slider _soundsSlider;
+    
     private PlaySoundsComponent[] _playSoundsComponents;
     private float _musicVolume;
     private float _soundVolume;
@@ -14,14 +18,22 @@ public class SettingsMenu : MonoBehaviour
 
     private void Start()
     {
+        SetVolume();
+    }
+
+    public void SetVolume()
+    {
         if (PlayerPrefs.HasKey("MusicVolume"))
         {
             _musicVolume = PlayerPrefs.GetFloat("MusicVolume");
+            
         }
         else
         {
-            _musicVolume = 1;
+            _musicVolume = 0.5f;
         }
+
+        _musicSlider.value = _musicVolume;
 
         if (PlayerPrefs.HasKey("SoundsVolume"))
         {
@@ -29,12 +41,19 @@ public class SettingsMenu : MonoBehaviour
         }
         else
         {
-            _soundVolume = 1;
+            _soundVolume = 0.5f;
         }
+        
+        _soundsSlider.value = _soundVolume;
     }
 
     public void ChangeVolumeForMusic(float volume)
     {
+        if (_playSoundsComponents == null)
+        {
+            _playSoundsComponents = FindObjectsOfType<PlaySoundsComponent>();
+        }
+        
         _musicVolume = volume;
 
         foreach (var component in _playSoundsComponents)
@@ -48,6 +67,11 @@ public class SettingsMenu : MonoBehaviour
 
     public void ChangeVolumeForSounds(float volume)
     {
+        if (_playSoundsComponents == null)
+        {
+            _playSoundsComponents = FindObjectsOfType<PlaySoundsComponent>();
+        }
+        
         _soundVolume = volume;
 
         foreach (var component in _playSoundsComponents)
