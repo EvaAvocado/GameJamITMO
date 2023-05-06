@@ -5540,6 +5540,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1512452307}
   - component: {fileID: 1512452306}
+  - component: {fileID: 1512452309}
   - component: {fileID: 1512452308}
   m_Layer: 0
   m_Name: LevelManager
@@ -5562,7 +5563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slider: {fileID: 252229286}
   _loadScene: {fileID: 1246135637}
-  _nextLevelName: PlayerTest 2
+  _nextLevelName: PlayerTest 1
 --- !u!4 &1512452307
 Transform:
   m_ObjectHideFlags: 0
@@ -5605,6 +5606,35 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.594355, y: 4.481222}
   m_EdgeRadius: 0
+--- !u!114 &1512452309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512452305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1a4d791a20a9544499cf6b444b992ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: Player
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1512452306}
+        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+        m_MethodName: LoadLevelByName
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnTriggerEnterOnly: 0
 --- !u!1 &1521207903
 GameObject:
   m_ObjectHideFlags: 0
