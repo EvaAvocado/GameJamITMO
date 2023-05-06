@@ -5,9 +5,15 @@ using UnityEngine.Events;
 
 public class Thing : MonoBehaviour
 {
+    [Header("Click count")]
     public int clickCount;
+    public int currentClickCount;
+    
+    [Header("Points")]
     public int points;
     public int currentPoints;
+    
+    [Header("Other")]
     [SerializeField] private ThingState _state;
     [SerializeField] private bool _isPlayerInZone;
     [SerializeField] private IntChange _action;
@@ -17,7 +23,7 @@ public class Thing : MonoBehaviour
     [SerializeField] private Animator _textAnimator;
 
     private PlayerInput _playerInput;
-    private int _currentClickCount;
+   
     
     private static readonly int IsShow = Animator.StringToHash("is-show");
 
@@ -30,9 +36,9 @@ public class Thing : MonoBehaviour
     private void Awake()
     {
         _playerInput = new PlayerInput();
-        _currentClickCount = clickCount;
+        currentClickCount = clickCount;
         currentPoints = points;
-        _currentClickText.text = _currentClickCount.ToString();
+        _currentClickText.text = currentClickCount.ToString();
         _playerInput.Player.Intetact.performed += context => Click();
     }
 
@@ -48,19 +54,19 @@ public class Thing : MonoBehaviour
 
     private void Click()
     {
-        if (_isPlayerInZone && _currentClickCount > 0)
+        if (_isPlayerInZone && currentClickCount > 0 && _state != ThingState.Broken)
         {
-            _currentClickCount--;
-            _currentClickText.text = _currentClickCount.ToString();
+            currentClickCount--;
+            _currentClickText.text = currentClickCount.ToString();
             _textAnimator.SetTrigger(IsShow);
             
-            if (_currentClickCount == 0)
+            if (currentClickCount == 0)
             {
                 _currentClickText.text = "Сломано!";
             }
         }
 
-        if (_currentClickCount <= 0 && _state == ThingState.Default)
+        if (currentClickCount <= 0 && _state == ThingState.Default)
         {
             _action?.Invoke(currentPoints);
             _state = ThingState.Broken;
@@ -70,8 +76,8 @@ public class Thing : MonoBehaviour
     public void FixThing()
     {
         _state = ThingState.Default;
-        _currentClickCount = clickCount;
-        _currentClickText.text = _currentClickCount.ToString();
+        currentClickCount = clickCount;
+        _currentClickText.text = currentClickCount.ToString();
     }
     
     public void SetIsPlayerInZone(bool status)

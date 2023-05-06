@@ -4,6 +4,13 @@ public class Player : Creature
 {
     [SerializeField] private float jumpHeight;
     [SerializeField] private bool isGrounded = true;
+    [SerializeField] public PlayerState playerState;
+    
+    public enum PlayerState
+    {
+        Default,
+        Die
+    }
     
     private Rigidbody2D _rb;
     //private Animator _animator;
