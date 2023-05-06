@@ -5,8 +5,9 @@ using UnityEngine.Events;
 
 public class Thing : MonoBehaviour
 {
-    [SerializeField] private int _clickCount;
-    [SerializeField] private int _points;
+    public int clickCount;
+    public int points;
+    public int currentPoints;
     [SerializeField] private ThingState _state;
     [SerializeField] private bool _isPlayerInZone;
     [SerializeField] private IntChange _action;
@@ -29,7 +30,8 @@ public class Thing : MonoBehaviour
     private void Awake()
     {
         _playerInput = new PlayerInput();
-        _currentClickCount = _clickCount;
+        _currentClickCount = clickCount;
+        currentPoints = points;
         _currentClickText.text = _currentClickCount.ToString();
         _playerInput.Player.Intetact.performed += context => Click();
     }
@@ -60,7 +62,7 @@ public class Thing : MonoBehaviour
 
         if (_currentClickCount <= 0 && _state == ThingState.Default)
         {
-            _action?.Invoke(_points);
+            _action?.Invoke(currentPoints);
             _state = ThingState.Broken;
         }
     }
@@ -68,7 +70,7 @@ public class Thing : MonoBehaviour
     public void FixThing()
     {
         _state = ThingState.Default;
-        _currentClickCount = _clickCount;
+        _currentClickCount = clickCount;
         _currentClickText.text = _currentClickCount.ToString();
     }
     
