@@ -61,8 +61,6 @@ public class Ladder : MonoBehaviour
         
         if (ownerInInteractionZone && _owner.isCanMoveToAnotherFloor)
         {
-            print(ownerInInteractionZone);
-            print(_owner.isCanMoveToAnotherFloor);
             MoveToAnotherFloorForNpc();
         }
     }
