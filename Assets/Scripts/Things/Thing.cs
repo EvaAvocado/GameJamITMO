@@ -21,11 +21,13 @@ public class Thing : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text _currentClickText;
     [SerializeField] private Animator _textAnimator;
+    [SerializeField] private Animator _hintTextAnimator;
 
     private PlayerInput _playerInput;
    
     
     private static readonly int IsShow = Animator.StringToHash("is-show");
+    private static readonly int IsHint = Animator.StringToHash("is-hint");
 
     public enum ThingState
     {
@@ -54,6 +56,8 @@ public class Thing : MonoBehaviour
 
     private void Click()
     {
+        _hintTextAnimator.SetBool(IsHint, false);
+        
         if (_isPlayerInZone && currentClickCount > 0 && _state != ThingState.Broken)
         {
             currentClickCount--;
@@ -83,6 +87,11 @@ public class Thing : MonoBehaviour
     public void SetIsPlayerInZone(bool status)
     {
         _isPlayerInZone = status;
+        
+        if (_state == ThingState.Default)
+        {
+           _hintTextAnimator.SetBool(IsHint, _isPlayerInZone); 
+        }
     }
 }
 
