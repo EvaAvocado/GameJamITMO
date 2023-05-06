@@ -2,45 +2,46 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using static Creature;
 using Random = UnityEngine.Random;
 
 public class OwnerAi : Owner
 {
-    [SerializeField] private Player _target;
+    [SerializeField] private Transform _target;
     [SerializeField] private Cooldown _cooldown;
     [SerializeField] private Ladder _ladder;
+    [SerializeField] private BoxCollider2D _currentCollider;
+    [SerializeField] private BoxCollider2D _collider;
+    [SerializeField] private Transform _targetTransform;
+
+
     [SerializeField] private FirstFloor _firstFloor;
     [SerializeField] private SecondFloor _secondFloor;
     [SerializeField] private ThirdFloor _thirdFloor;
-    //[SerializeField] private Transform[] _movePoints;
 
     [SerializeField] private float _minIdleTime = 1f;
     [SerializeField] private float _maxIdleTime = 3f;
     [SerializeField] private float _delay = 0.5f;
     [SerializeField] private float _patrolDuration = 20f;
+    [SerializeField] private float _speedIncrease = 6f;
 
-    private Rigidbody2D _rigidbody;
     private int _randomPoint1;
     private int _randomPoint2;
     private int _randomPoint3;
+
     private float _currentTime = 0;
     private float _idleTime = 0f;
-    private bool _isDormantStateOff = false;
     private bool _isTurnedRight = true;
+    private bool _isAttacked = false;
 
     private Coroutine _coroutine;
-    private int _currentPointIndex;
+    private Coroutine _follow;
 
     public enum FlorPoints
     {
         firstFlorPoints,
         secondFlorPoints,
         thirdFlorPoints
-    }
-
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
@@ -57,45 +58,92 @@ public class OwnerAi : Owner
     private void Update()
     {
         if (_cooldown.IsReady)
-        {
             isCanMoveToAnotherFloor = true;
-        }
     }
 
     public void IdleState()
     {
         if (_coroutine != null)
-        {
             StopCoroutine(_coroutine);
-        }
 
         _currentTime = 0f;
-        //Debug.Log("TestIdleStatecs, EnterBehavior");
+
         _coroutine = StartCoroutine(Idle());
     }
 
     public void PatrollingState()
     {
         if (_coroutine != null)
-        {
             StopCoroutine(_coroutine);
-        }
 
         _coroutine = StartCoroutine(Patrol());
+    }
 
-        //IdleState();
+    public void DoStealth()
+    {
+        _isAttacked = true;
+        Attack();
+    }
+
+    public void NoAttack()
+    {
+        //меняется анимация с бега на осмотреться
+
+        if (!_isAttacked)
+        {
+            StopCoroutine(_follow);
+
+            CurrentSpeed = Speed;
+            _currentCollider.enabled = true;
+            _collider.enabled = false;
+            IdleState();
+            print("Не атакую!");
+        }
+    }
+
+    public void Attack()
+    {
+        //меняется анимация с хотьбы на бег
+
+        if (_isAttacked)
+        {
+            CurrentSpeed = _speedIncrease;
+            _currentCollider.enabled = false;
+            _collider.enabled = true;
+
+            if (_coroutine != null)
+                StopCoroutine(_coroutine);
+
+            StartCoroutine(Follow());
+
+            print("Атакую!!!");
+
+            _isAttacked = false;
+        }
+    }
+
+    private IEnumerator Follow()
+    {
+        while (transform.position != _target.position)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, _target.position, CurrentSpeed * Time.deltaTime);
+            yield return null;
+
+            if (transform.position == _target.position)
+            {
+                //анимация ловли кота
+            }
+        }
     }
 
     private IEnumerator Idle()
     {
         _idleTime = Random.Range(_minIdleTime, _maxIdleTime);
+        print("перехожу в айдл");
         yield return new WaitForSeconds(_idleTime);
-        Flip();
-        _isDormantStateOff = true;
-        yield return new WaitForSeconds(_idleTime);
+
+        //Flip();
         PatrollingState();
-        //if (!TryGetComponent(out Player player))
-        //Debug.Log("TestIdleStatecs, Idle");
     }
 
     private IEnumerator Patrol()
@@ -121,6 +169,24 @@ public class OwnerAi : Owner
                     targetPositionSecondFloor = _secondFloor.MovePoints[_randomPoint2].position;
                 else if (currentFloor == CurrentFloor.Third)
                     targetPositionThirdFloor = _thirdFloor.MovePoints[_randomPoint3].position;
+
+                //if (transform.position.x > targetPositionFirstFloor.x && _isTurnedRight ||
+                //transform.position.x < targetPositionFirstFloor.x && !_isTurnedRight)
+                //{
+                //    Flip();
+                //}
+
+                //if (transform.position.x > targetPositionSecondFloor.x && _isTurnedRight ||
+                //transform.position.x < targetPositionSecondFloor.x && !_isTurnedRight)
+                //{
+                //    Flip();
+                //}
+
+                //if (transform.position.x > targetPositionThirdFloor.x && _isTurnedRight ||
+                //transform.position.x < targetPositionThirdFloor.x && !_isTurnedRight)
+                //{
+                //    Flip();
+                //}
             }
 
             _currentTime += Time.deltaTime;
@@ -132,17 +198,6 @@ public class OwnerAi : Owner
             else if (currentFloor == CurrentFloor.Third)
                 transform.position = Vector2.MoveTowards(transform.position, targetPositionThirdFloor, Speed * Time.deltaTime);
 
-            //if (isCanMoveToAnotherFloor)
-            //{
-            //    _ladder.MoveToAnotherFloorForNpc();
-            //}
-            {
-                // направляемся к текущей цели (точке патруля)
-                //Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, Speed * Time.deltaTime);
-                //_rigidbody.MovePosition(newPosition);
-                //_rigidbody.velocity = (targetPosition - transform.position).normalized * Speed;
-            }
-
             yield return null;
         }
 
@@ -152,8 +207,6 @@ public class OwnerAi : Owner
 
     private void Flip()
     {
-        //Debug.Log("TestIdleStatecs, Flip");
-
         _isTurnedRight = !_isTurnedRight;
         transform.Rotate(0f, 180f, 0f);
     }
