@@ -26,7 +26,7 @@ public class Penta : MonoBehaviour
     {
         if (_isPlayerInZone)
         {
-            _amuletManager.SpawnRandomAmulet();
+            _amuletManager.SpawnNewRandomAmulet();
         }
     }
 

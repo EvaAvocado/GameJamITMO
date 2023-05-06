@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,6 +9,18 @@ public class TimerComponent : MonoBehaviour
     [SerializeField] private UnityEvent _action;
     
     private float _timeBeforeApplyAction;
+
+    public bool DoAction
+    {
+        get { return _doAction; }
+        set { _doAction = value; }
+    }
+
+    public float TimeFloat
+    {
+        get { return _time; }
+        set { _time = value; }
+    }
 
     public float TimeBeforeApplyAction
     {
@@ -43,5 +56,8 @@ public class TimerComponent : MonoBehaviour
         }
     }
 
-   
+    public void Reset()
+    {
+        _timeBeforeApplyAction = _time;
+    }
 }
