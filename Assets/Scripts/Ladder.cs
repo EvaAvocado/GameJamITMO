@@ -10,9 +10,10 @@ public class Ladder : MonoBehaviour
     public bool playerInInteractionZone;
     public bool ownerInInteractionZone;
     
-    public void MoveToAnotherFloorForPlayer(float direction)
+    public void DefaultMoveForPlayer(float direction)
     {
-        if ((_player.currentFloor == Creature.CurrentFloor.First && direction >= 0.95) || (_player.currentFloor == Creature.CurrentFloor.Third && direction <= -0.95))
+        if ((_player.currentFloor == Creature.CurrentFloor.First && direction >= 0.95) ||
+            (_player.currentFloor == Creature.CurrentFloor.Third && direction <= -0.95))
         {
             TransferToSecondFloor(_player.gameObject);
         }
@@ -23,6 +24,46 @@ public class Ladder : MonoBehaviour
         else if (_player.currentFloor == Creature.CurrentFloor.Second && direction <= -0.95)
         {
             TransferToFirstFloor(_player.gameObject);
+        }
+    }
+
+    public void RandomMoveForPlayer(float direction)
+    {
+        if (_player.currentFloor == Creature.CurrentFloor.First && direction >= 0.95)
+        {
+            TransferToThirdFloor(_player.gameObject);
+        }
+        else if (_player.currentFloor == Creature.CurrentFloor.Third && direction <= -0.95)
+        {
+            TransferToFirstFloor(_player.gameObject);
+        }
+        else if (_player.currentFloor == Creature.CurrentFloor.Second && direction >= 0.95)
+        {
+            TransferToFirstFloor(_player.gameObject);
+        }
+        else if (_player.currentFloor == Creature.CurrentFloor.Second && direction <= -0.95)
+        {
+            TransferToThirdFloor(_player.gameObject);
+        }
+    }
+
+    public void MoveToAnotherFloorForPlayer(float direction)
+    {
+        if (!_player.isCanToRandomFloor)
+        {
+            DefaultMoveForPlayer(direction);
+        }
+        else
+        {
+            int random = Random.Range(0, 2);
+            if (random == 0)
+            {
+                DefaultMoveForPlayer(direction);
+            }
+            else
+            {
+                RandomMoveForPlayer(direction);
+            }
         }
     }
     
