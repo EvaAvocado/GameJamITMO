@@ -110,17 +110,17 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 359
-        height: 435
+        width: 365.83334
+        height: 432
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 831380b04b168304aa641112c27c2e48
-      internalID: -1063644686
+      spriteID: 9726e71affb1d7f41a41c60840a10801
+      internalID: -314910189
       vertices: []
       indices: 
       edges: []
@@ -129,19 +129,19 @@ TextureImporter:
       name: Scratches_1
       rect:
         serializedVersion: 2
-        x: 361
+        x: 365
         y: 0
-        width: 359
-        height: 435
+        width: 365.83334
+        height: 432
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a53a2c6d748a021418a9f5a2f380d96a
-      internalID: 766671023
+      spriteID: a62939ccfa846e047a98dd47fa5d9f37
+      internalID: -532478119
       vertices: []
       indices: 
       edges: []
@@ -150,19 +150,19 @@ TextureImporter:
       name: Scratches_2
       rect:
         serializedVersion: 2
-        x: 725
+        x: 730
         y: 0
-        width: 359
-        height: 435
+        width: 365.83334
+        height: 432
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c900fdc5786a704b95c468b49d468e4
-      internalID: -897174090
+      spriteID: 7eaf2e05ebe18144a8dff093d4aeceb2
+      internalID: -1681076862
       vertices: []
       indices: 
       edges: []
@@ -171,19 +171,19 @@ TextureImporter:
       name: Scratches_3
       rect:
         serializedVersion: 2
-        x: 1089
+        x: 1095
         y: 0
-        width: 363.83334
-        height: 435
+        width: 365.83334
+        height: 432
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8278cb7fbdfdfd447ab27c863f4bdec1
-      internalID: 1420259747
+      spriteID: 861d3c95b8b39684ebf75f8e4e35c98b
+      internalID: -749046943
       vertices: []
       indices: 
       edges: []
@@ -192,19 +192,19 @@ TextureImporter:
       name: Scratches_4
       rect:
         serializedVersion: 2
-        x: 1452
+        x: 1460
         y: 0
-        width: 363.83334
-        height: 435
+        width: 365.83334
+        height: 432
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8fee0ffaffb32454f80caba2cc93c213
-      internalID: -1909431960
+      spriteID: bce4ef40765aaa94a9358d6606105e25
+      internalID: -330061686
       vertices: []
       indices: 
       edges: []
@@ -213,19 +213,19 @@ TextureImporter:
       name: Scratches_5
       rect:
         serializedVersion: 2
-        x: 1815
+        x: 1825
         y: 0
-        width: 363.83334
-        height: 435
+        width: 365.83334
+        height: 432
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 930ff1f73d8f289459a569e354aca20a
-      internalID: -969960598
+      spriteID: 04fb8366bd9b4fc4cb2767179e9bf1d4
+      internalID: 1887810798
       vertices: []
       indices: 
       edges: []
@@ -241,12 +241,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Scratches_1: 766671023
-      Scratches_4: -1909431960
-      Scratches_3: 1420259747
-      Scratches_2: -897174090
-      Scratches_5: -969960598
-      Scratches_0: -1063644686
+      Scratches_1: -532478119
+      Scratches_4: -330061686
+      Scratches_3: -749046943
+      Scratches_2: -1681076862
+      Scratches_5: 1887810798
+      Scratches_0: -314910189
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

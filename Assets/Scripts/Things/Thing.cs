@@ -12,8 +12,11 @@ public class Thing : MonoBehaviour
     [Header("Points")]
     public int points;
     public int currentPoints;
-    
-    [Header("Other")]
+
+    [Header("Other")] 
+    [SerializeField] private Player _player;
+    [SerializeField] private Animator _thingAnimator;
+    [SerializeField] private ThingName _name;
     [SerializeField] private ThingState _state;
     [SerializeField] private bool _isPlayerInZone;
     [SerializeField] private IntChange _action;
@@ -24,11 +27,23 @@ public class Thing : MonoBehaviour
     [SerializeField] private Animator _hintTextAnimator;
 
     private PlayerInput _playerInput;
-   
-    
+
     private static readonly int IsShow = Animator.StringToHash("is-show");
     private static readonly int IsHint = Animator.StringToHash("is-hint");
-
+    private static readonly int IsBroken = Animator.StringToHash("is-broken");
+    private static readonly int IsDefault= Animator.StringToHash("is-default");
+    
+    public enum ThingName
+    {
+        Paper,
+        PhotoFrame,
+        Flower,
+        Sofa,
+        Glass,
+        Bottle,
+        Bed,
+        Slippers
+    }
     public enum ThingState
     {
         Default,
@@ -74,12 +89,16 @@ public class Thing : MonoBehaviour
         {
             _action?.Invoke(currentPoints);
             _state = ThingState.Broken;
+            _player.SomethingBroken(_name);
+            _thingAnimator.SetTrigger(IsBroken);
         }
     }
 
     public void FixThing()
     {
         _state = ThingState.Default;
+        _thingAnimator.SetTrigger(IsDefault);
+        
         currentClickCount = clickCount;
         _currentClickText.text = currentClickCount.ToString();
     }
