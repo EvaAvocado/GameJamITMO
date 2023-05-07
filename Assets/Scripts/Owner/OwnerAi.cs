@@ -2,6 +2,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using static Creature;
 using Random = UnityEngine.Random;
 
@@ -12,8 +13,6 @@ public class OwnerAi : Owner
     [SerializeField] private Ladder _ladder;
     [SerializeField] private BoxCollider2D _currentCollider;
     [SerializeField] private BoxCollider2D _collider;
-    [SerializeField] private Transform _targetTransform;
-
 
     [SerializeField] private FirstFloor _firstFloor;
     [SerializeField] private SecondFloor _secondFloor;
@@ -24,6 +23,9 @@ public class OwnerAi : Owner
     [SerializeField] private float _delay = 0.5f;
     [SerializeField] private float _patrolDuration = 20f;
     [SerializeField] private float _speedIncrease = 6f;
+    
+    [Header("For Eva")]
+    [SerializeField] private UnityEvent Caught;
 
     private int _randomPoint1;
     private int _randomPoint2;
@@ -91,9 +93,10 @@ public class OwnerAi : Owner
 
         if (!_isAttacked)
         {
-            StopCoroutine(_follow);
+            if (_follow != null)
+                StopCoroutine(_follow);
 
-            CurrentSpeed = Speed;
+            //CurrentSpeed = Speed;
             _currentCollider.enabled = true;
             _collider.enabled = false;
             IdleState();
@@ -107,7 +110,7 @@ public class OwnerAi : Owner
 
         if (_isAttacked)
         {
-            CurrentSpeed = _speedIncrease;
+            //CurrentSpeed = _speedIncrease;
             _currentCollider.enabled = false;
             _collider.enabled = true;
 
@@ -126,12 +129,16 @@ public class OwnerAi : Owner
     {
         while (transform.position != _target.position)
         {
+            Vector2 currentPosition = transform.position;
             transform.position = Vector2.MoveTowards(transform.position, _target.position, CurrentSpeed * Time.deltaTime);
-            yield return null;
+            transform.position = new Vector3(transform.position.x, currentPosition.y, transform.position.z);
+            
+            yield return new WaitForSeconds(60f);
 
             if (transform.position == _target.position)
             {
-                //анимация ловли кота
+                Caught?.Invoke();
+                print("событие");
             }
         }
     }
