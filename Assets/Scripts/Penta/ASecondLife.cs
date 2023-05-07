@@ -19,11 +19,13 @@ public class ASecondLife : Amulet
     public override void SetEffect()
     {
         _isHasSecondLife = true;
+        _player.SetSecondLife(true);
     }
 
     public override void Reset()
     {
         _isHasSecondLife = false;
+        _player.SetSecondLife(false);
     }
 
 

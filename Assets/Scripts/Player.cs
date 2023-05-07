@@ -9,6 +9,7 @@ public class Player : Creature
     public PlaySoundsComponent pentaSounds;
     
     public PlayerState playerState;
+    public bool hasSecondLife;
     public bool isCanToRandomFloor;
 
     public enum PlayerState
@@ -39,6 +40,11 @@ public class Player : Creature
     {
         isGrounded = true;
         _animator.SetBool(IsGrounded, true);
+    }
+
+    public void SetSecondLife(bool status)
+    {
+        hasSecondLife = status;
     }
     
     public void Move(Vector2 direction)
