@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [Serializable]
-public class Cooldown
+public class Cooldown : MonoBehaviour
 {
     [SerializeField] private float _valueOfCooldown;
 
