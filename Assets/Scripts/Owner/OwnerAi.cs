@@ -10,10 +10,10 @@ public class OwnerAi : Owner
     [SerializeField] private Transform _target;
     [SerializeField] private Cooldown _cooldown;
     [SerializeField] private Ladder _ladder;
+    [SerializeField] private Thing _thing;
     [SerializeField] private BoxCollider2D _currentCollider;
     [SerializeField] private BoxCollider2D _collider;
     [SerializeField] private Transform _targetTransform;
-
 
     [SerializeField] private FirstFloor _firstFloor;
     [SerializeField] private SecondFloor _secondFloor;
@@ -22,18 +22,22 @@ public class OwnerAi : Owner
     [SerializeField] private float _minIdleTime = 1f;
     [SerializeField] private float _maxIdleTime = 3f;
     [SerializeField] private float _delay = 0.5f;
-    [SerializeField] private float _patrolDuration = 20f;
+    [SerializeField] private float _minPatrolDuration = 15f;
+    [SerializeField] private float _maxPatrolDuration = 30f;
     [SerializeField] private float _speedIncrease = 6f;
 
     private int _randomPoint1;
     private int _randomPoint2;
     private int _randomPoint3;
 
+    private float _patrolDuration;
+
     private float _currentTime = 0;
     private float _idleTime = 0f;
     private bool _isTurnedRight = true;
     private bool _isAttacked = false;
 
+    private Animator _animator;
     private Coroutine _coroutine;
     private Coroutine _follow;
 
@@ -44,12 +48,19 @@ public class OwnerAi : Owner
         thirdFlorPoints
     }
 
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
     private void Start()
     {
         _coroutine = StartCoroutine(Patrol());
         _randomPoint1 = Random.Range(0, _firstFloor.MovePoints.Length);
         _randomPoint2 = Random.Range(0, _secondFloor.MovePoints.Length);
         _randomPoint3 = Random.Range(0, _thirdFloor.MovePoints.Length);
+
+        _patrolDuration = Random.Range(_minPatrolDuration, _maxPatrolDuration);
 
         CurrentSpeed = Speed;
         _cooldown.Reset();
@@ -75,6 +86,8 @@ public class OwnerAi : Owner
     {
         if (_coroutine != null)
             StopCoroutine(_coroutine);
+
+        _patrolDuration = Random.Range(_minPatrolDuration, _maxPatrolDuration);
 
         _coroutine = StartCoroutine(Patrol());
     }
@@ -116,18 +129,42 @@ public class OwnerAi : Owner
 
             StartCoroutine(Follow());
 
-            print("Атакую!!!");
-
             _isAttacked = false;
         }
+    }
+
+    public void FixThing()
+    {
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+        if (Thing.ThingState.Broken == _thing._state)
+        {
+            if (_coroutine != null)
+                StopCoroutine(_coroutine);
+
+            //включение анимации починки вещи
+            _animator.Play("Fix");
+
+            if (stateInfo.normalizedTime >= 1.0f)
+                _thing.FixThing();
+        }
+
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        PatrollingState();
     }
 
     private IEnumerator Follow()
     {
         while (transform.position != _target.position)
         {
+            Vector2 currentPosition = transform.position;
+
             transform.position = Vector2.MoveTowards(transform.position, _target.position, CurrentSpeed * Time.deltaTime);
-            yield return null;
+            transform.position = new Vector3(transform.position.x, currentPosition.y, transform.position.z);
+
+            yield return new WaitForSeconds(2f);
 
             if (transform.position == _target.position)
             {

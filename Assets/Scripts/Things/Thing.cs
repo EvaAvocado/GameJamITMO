@@ -14,9 +14,10 @@ public class Thing : MonoBehaviour
     public int currentPoints;
     
     [Header("Other")]
-    [SerializeField] private ThingState _state;
+    public ThingState _state;
     [SerializeField] private bool _isPlayerInZone;
     [SerializeField] private IntChange _action;
+    //public ThingState CurrentState;
     
     [Header("UI")]
     [SerializeField] private TMP_Text _currentClickText;
