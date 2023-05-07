@@ -10,10 +10,20 @@ public class EndUI : MonoBehaviour
 
     public void OpenEndMenu()
     {
+        if (!_player.hasSecondLife)
+        {
+           _scoreText.text = "Вы набрали " + _scoreUI.Score + " очков";
+            _endMenu.SetActive(true);
+            _player.gameObject.SetActive(false); 
+        }
+    }
+
+    public void OpenEndMenuFromTimer()
+    {
         _scoreText.text = "Вы набрали " + _scoreUI.Score + " очков";
         _endMenu.SetActive(true);
-        _player.gameObject.SetActive(false);
+        _player.gameObject.SetActive(false); 
     }
-    
+
     //public void 
 }

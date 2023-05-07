@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuUI : MonoBehaviour
 {
@@ -9,7 +10,10 @@ public class MenuUI : MonoBehaviour
 
     private void Awake()
     {
-        Bridge.VKWebAppInit();
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+             Bridge.VKWebAppInit();
+        }
         _playerInput = new PlayerInput();
         _playerInput.Player.Menu.performed += context => ChangeStateMenu();
     }
