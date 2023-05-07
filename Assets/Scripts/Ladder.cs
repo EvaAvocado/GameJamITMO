@@ -6,15 +6,14 @@ public class Ladder : MonoBehaviour
     [SerializeField] private Owner _owner;
     [SerializeField] private LadderManager _ladderManager;
     [SerializeField] private Cooldown _cooldown;
-    
-    [Header("UI")]
-    [SerializeField] private Animator _hintTextAnimator;
-    
+
+    [Header("UI")] [SerializeField] private Animator _hintTextAnimator;
+
     public bool playerInInteractionZone;
     public bool ownerInInteractionZone;
-    
+
     private static readonly int IsHint = Animator.StringToHash("is-hint");
-    
+
     public void DefaultMoveForPlayer(float direction)
     {
         if ((_player.currentFloor == Creature.CurrentFloor.First && direction >= 0.95) ||
@@ -71,42 +70,48 @@ public class Ladder : MonoBehaviour
             }
         }
     }
-    
+
     public void MoveToAnotherFloorForNpc()
     {
+        print("зашел!!!!");
         var randomFloor = Random.Range(0, 2); // => [0;2)
-        
-        if ((_owner.currentFloor == Creature.CurrentFloor.First) || (_owner.currentFloor == Creature.CurrentFloor.Third))
+
+        if ((_owner.currentFloor == Creature.CurrentFloor.First) ||
+            (_owner.currentFloor == Creature.CurrentFloor.Third))
         {
             TransferToSecondFloor(_owner.gameObject);
             _cooldown.Reset();
             _owner.isCanMoveToAnotherFloor = false;
+            print("зашел");
         }
         else if (randomFloor == 0)
         {
             TransferToThirdFloor(_owner.gameObject);
             _cooldown.Reset();
             _owner.isCanMoveToAnotherFloor = false;
+            print("зашел2");
         }
         else
         {
-            TransferToFirstFloor(_owner.gameObject); 
+            TransferToFirstFloor(_owner.gameObject);
             _cooldown.Reset();
             _owner.isCanMoveToAnotherFloor = false;
+            print("зашел2");
         }
     }
 
     public void SetPlayerInInteractionZone(bool status)
     {
         playerInInteractionZone = status;
-        
+
         _hintTextAnimator.SetBool(IsHint, playerInInteractionZone);
-        
     }
-    
+
     public void SetOwnerInInteractionZone(bool status)
     {
         ownerInInteractionZone = status;
+        
+        print("SET-OWNER: " + _owner.isCanMoveToAnotherFloor);
         
         if (ownerInInteractionZone && _owner.isCanMoveToAnotherFloor)
         {
@@ -131,7 +136,7 @@ public class Ladder : MonoBehaviour
         if (creature.GetComponent<Player>())
             _player.currentFloor = Creature.CurrentFloor.Second;
         else
-            _owner.currentFloor = Creature.CurrentFloor.Second;       
+            _owner.currentFloor = Creature.CurrentFloor.Second;
     }
 
     private void TransferToThirdFloor(GameObject creature)

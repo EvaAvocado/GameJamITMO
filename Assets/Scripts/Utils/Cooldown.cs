@@ -6,7 +6,7 @@ public class Cooldown : MonoBehaviour
 {
     [SerializeField] private float _valueOfCooldown;
 
-    private float _timesUp;
+    public float _timesUp;
     
     public float ValueOfCooldown
     {
