@@ -27,7 +27,7 @@ public class AmuletManager : MonoBehaviour
         SecondLife,
         MoreTime,
         Uselessness,
-        RandomRoom
+        RandomFloor
     }
     
     public Thing[] Things
@@ -141,7 +141,7 @@ public class AmuletManager : MonoBehaviour
 
     private void ChooseCurrentAmulet()
     {
-        var random = Random.Range(0, 101);
+        int random = Random.Range(0, 101);
 
         if (IsInRange(random, 0, 12))
         {
@@ -163,15 +163,16 @@ public class AmuletManager : MonoBehaviour
         {
             _currentAmuletState = AmuletState.Uselessness;
         }
-        else if (IsInRange(random, 88, 100))
+        else 
         {
-            _currentAmuletState = AmuletState.RandomRoom;
+            _currentAmuletState = AmuletState.RandomFloor;
         }
     }
 
     private bool IsInRange(int value, int v1, int v2)
     {
-        return Enumerable.Range(v1, v2).Contains(value);
+        return value >= v1 && value <= v2 ;
+        //return Enumerable.Range(v1, v2).Contains(value);
     }
 
     /*private void ResetMorePoints()
