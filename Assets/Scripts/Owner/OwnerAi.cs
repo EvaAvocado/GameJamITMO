@@ -71,7 +71,7 @@ public class OwnerAi : Owner
     private void Update()
     {
         print(_cooldown._timesUp);
-        
+
         if (_cooldown.IsReady)
             isCanMoveToAnotherFloor = true;
     }
@@ -139,9 +139,9 @@ public class OwnerAi : Owner
 
     public void FixThing()
     {
-        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        //AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-        if (Thing.ThingState.Broken == _thing._state)
+        if (Thing.ThingState.Broken == FindObjectOfType<Thing>()._state)
         {
             if (_coroutine != null)
                 StopCoroutine(_coroutine);
@@ -149,8 +149,8 @@ public class OwnerAi : Owner
             //включение анимации починки вещи
             _animator.Play("Fix");
 
-            if (stateInfo.normalizedTime >= 1.0f)
-                _thing.FixThing();
+            //if (stateInfo.normalizedTime >= 1.0f)
+            _thing.FixThing();
         }
 
         if (_coroutine != null)
@@ -169,13 +169,13 @@ public class OwnerAi : Owner
                 Vector2.MoveTowards(transform.position, _target.position, CurrentSpeed * Time.deltaTime);
             transform.position = new Vector3(transform.position.x, currentPosition.y, transform.position.z);
 
-            yield return new WaitForSeconds(10f);
-
-            if (transform.position == _target.position)
+            if (transform.position.x <= _target.position.x)
             {
                 //анимация ловли кота
                 catchPlayerAction?.Invoke();
             }
+
+            yield return new WaitForSeconds(10f);
         }
     }
 

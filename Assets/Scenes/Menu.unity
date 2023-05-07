@@ -502,7 +502,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5295534307851489228, guid: f02aee647455cc64f904baaa83758419, type: 3}
       propertyPath: _nextLevelName
-      value: PlayerTest 1
+      value: PlayerTest 2
       objectReference: {fileID: 0}
     - target: {fileID: 5295534307851489229, guid: f02aee647455cc64f904baaa83758419, type: 3}
       propertyPath: m_RootOrder
@@ -1079,4 +1079,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596211c5060e390448863a23796b0b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bridge: {fileID: 0}
+  Bridge: {fileID: 918457534}
