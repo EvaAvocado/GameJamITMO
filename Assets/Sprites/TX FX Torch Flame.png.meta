@@ -101,6 +101,42 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -830,6 +866,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       TX FX Torch Flame_14: -2030035445
+      TX FX Torch Flame_24: -135892450
       TX FX Torch Flame_18: -950396399
       TX FX Torch Flame_33: 717540571
       TX FX Torch Flame_6: 119230868
@@ -841,7 +878,6 @@ TextureImporter:
       TX FX Torch Flame_26: 325337486
       TX FX Torch Flame_29: 1737499531
       TX FX Torch Flame_23: -71520168
-      TX FX Torch Flame_30: -316177521
       TX FX Torch Flame_2: 7778957
       TX FX Torch Flame_15: 915472211
       TX FX Torch Flame_9: -651727061
@@ -856,13 +892,13 @@ TextureImporter:
       TX FX Torch Flame_32: -462788612
       TX FX Torch Flame_20: -346354480
       TX FX Torch Flame_22: -1956414652
-      TX FX Torch Flame_7: 1068057612
-      TX FX Torch Flame_3: 255218610
-      TX FX Torch Flame_4: 584595624
-      TX FX Torch Flame_8: -1936193522
-      TX FX Torch Flame_24: -135892450
-      TX FX Torch Flame_12: -1047543060
       TX FX Torch Flame_13: -1671143810
+      TX FX Torch Flame_30: -316177521
+      TX FX Torch Flame_3: 255218610
+      TX FX Torch Flame_7: 1068057612
+      TX FX Torch Flame_8: -1936193522
+      TX FX Torch Flame_4: 584595624
+      TX FX Torch Flame_12: -1047543060
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
