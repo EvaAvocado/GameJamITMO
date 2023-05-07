@@ -424,6 +424,7 @@ MonoBehaviour:
   - _id: 1
     _clip: {fileID: 8300000, guid: 3b34d15303d4aff4f92260b818af519e, type: 3}
   key: 0
+  _isSongByPieces: 0
 --- !u!1001 &918457533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -481,6 +482,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b31a6436a282364085b5fd5d9518611, type: 3}
+--- !u!114 &918457534 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7172282011744538684, guid: 4b31a6436a282364085b5fd5d9518611, type: 3}
+  m_PrefabInstance: {fileID: 918457533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a23aba91a4ed784e8154b90ec84d2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1265942402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1019,6 +1031,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8015155081048726305, guid: 9631d4807e8b2674397da71543b44d0a, type: 3}
+      propertyPath: Bridge
+      value: 
+      objectReference: {fileID: 918457534}
     - target: {fileID: 8015155081048726310, guid: 9631d4807e8b2674397da71543b44d0a, type: 3}
       propertyPath: m_Name
       value: MenuUI 1

@@ -26,7 +26,7 @@ public class MenuUI : MonoBehaviour
 
     private void OnDisable()
     {
-        _playerInput.Disable();
+//        _playerInput.Disable();
     }
 
     private void ChangeStateMenu()

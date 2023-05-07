@@ -5,6 +5,8 @@ public class Player : Creature
     [SerializeField] private float jumpHeight;
     [SerializeField] private bool isGrounded = true;
     [SerializeField] private Animator _animator;
+
+    public PlaySoundsComponent pentaSounds;
     
     public PlayerState playerState;
     public bool isCanToRandomFloor;
@@ -96,6 +98,7 @@ public class Player : Creature
     {
         _isCanMove = false;
         _animator.SetTrigger(IsTearing);
+        pentaSounds.PlayRandomSoundComponent();
     }
 
     public void SetIsCanMoveTrue()

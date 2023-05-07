@@ -2,6 +2,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using static Creature;
 using Random = UnityEngine.Random;
 
@@ -13,7 +14,6 @@ public class OwnerAi : Owner
     [SerializeField] private Thing _thing;
     [SerializeField] private BoxCollider2D _currentCollider;
     [SerializeField] private BoxCollider2D _collider;
-    [SerializeField] private Transform _targetTransform;
 
     [SerializeField] private FirstFloor _firstFloor;
     [SerializeField] private SecondFloor _secondFloor;
@@ -25,6 +25,8 @@ public class OwnerAi : Owner
     [SerializeField] private float _minPatrolDuration = 15f;
     [SerializeField] private float _maxPatrolDuration = 30f;
     [SerializeField] private float _speedIncrease = 6f;
+
+    public UnityEvent catchPlayerAction;
 
     private int _randomPoint1;
     private int _randomPoint2;
@@ -68,6 +70,8 @@ public class OwnerAi : Owner
 
     private void Update()
     {
+        print(_cooldown._timesUp);
+        
         if (_cooldown.IsReady)
             isCanMoveToAnotherFloor = true;
     }
@@ -161,14 +165,16 @@ public class OwnerAi : Owner
         {
             Vector2 currentPosition = transform.position;
 
-            transform.position = Vector2.MoveTowards(transform.position, _target.position, CurrentSpeed * Time.deltaTime);
+            transform.position =
+                Vector2.MoveTowards(transform.position, _target.position, CurrentSpeed * Time.deltaTime);
             transform.position = new Vector3(transform.position.x, currentPosition.y, transform.position.z);
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(10f);
 
             if (transform.position == _target.position)
             {
                 //анимация ловли кота
+                catchPlayerAction?.Invoke();
             }
         }
     }
@@ -179,7 +185,7 @@ public class OwnerAi : Owner
         print("перехожу в айдл");
         yield return new WaitForSeconds(_idleTime);
 
-        //Flip();
+        Flip();
         PatrollingState();
     }
 
@@ -193,7 +199,8 @@ public class OwnerAi : Owner
         while (_currentTime <= _patrolDuration)
         {
             // проверяем, достигли ли мы текущей цели (точки патруля)
-            if (transform.position == targetPositionFirstFloor || transform.position == targetPositionSecondFloor || transform.position == targetPositionThirdFloor)
+            if (transform.position == targetPositionFirstFloor || transform.position == targetPositionSecondFloor ||
+                transform.position == targetPositionThirdFloor)
             {
                 // выбираем следующую точку патруля
                 _randomPoint1 = Random.Range(0, _firstFloor.MovePoints.Length);
@@ -207,33 +214,36 @@ public class OwnerAi : Owner
                 else if (currentFloor == CurrentFloor.Third)
                     targetPositionThirdFloor = _thirdFloor.MovePoints[_randomPoint3].position;
 
-                //if (transform.position.x > targetPositionFirstFloor.x && _isTurnedRight ||
-                //transform.position.x < targetPositionFirstFloor.x && !_isTurnedRight)
-                //{
-                //    Flip();
-                //}
+                if (transform.position.x > targetPositionFirstFloor.x && _isTurnedRight ||
+                    transform.position.x < targetPositionFirstFloor.x && !_isTurnedRight)
+                {
+                    Flip();
+                }
 
-                //if (transform.position.x > targetPositionSecondFloor.x && _isTurnedRight ||
-                //transform.position.x < targetPositionSecondFloor.x && !_isTurnedRight)
-                //{
-                //    Flip();
-                //}
+                if (transform.position.x > targetPositionSecondFloor.x && _isTurnedRight ||
+                    transform.position.x < targetPositionSecondFloor.x && !_isTurnedRight)
+                {
+                    Flip();
+                }
 
-                //if (transform.position.x > targetPositionThirdFloor.x && _isTurnedRight ||
-                //transform.position.x < targetPositionThirdFloor.x && !_isTurnedRight)
-                //{
-                //    Flip();
-                //}
+                if (transform.position.x > targetPositionThirdFloor.x && _isTurnedRight ||
+                    transform.position.x < targetPositionThirdFloor.x && !_isTurnedRight)
+                {
+                    Flip();
+                }
             }
 
             _currentTime += Time.deltaTime;
 
             if (currentFloor == CurrentFloor.First)
-                transform.position = Vector2.MoveTowards(transform.position, targetPositionFirstFloor, Speed * Time.deltaTime);
+                transform.position =
+                    Vector2.MoveTowards(transform.position, targetPositionFirstFloor, Speed * Time.deltaTime);
             else if (currentFloor == CurrentFloor.Second)
-                transform.position = Vector2.MoveTowards(transform.position, targetPositionSecondFloor, Speed * Time.deltaTime);
+                transform.position =
+                    Vector2.MoveTowards(transform.position, targetPositionSecondFloor, Speed * Time.deltaTime);
             else if (currentFloor == CurrentFloor.Third)
-                transform.position = Vector2.MoveTowards(transform.position, targetPositionThirdFloor, Speed * Time.deltaTime);
+                transform.position =
+                    Vector2.MoveTowards(transform.position, targetPositionThirdFloor, Speed * Time.deltaTime);
 
             yield return null;
         }
@@ -248,4 +258,3 @@ public class OwnerAi : Owner
         transform.Rotate(0f, 180f, 0f);
     }
 }
-

@@ -17,7 +17,7 @@ public class Thing : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private Animator _thingAnimator;
     [SerializeField] private ThingName _name;
-    [SerializeField] private ThingState _state;
+    public ThingState _state;
     [SerializeField] private bool _isPlayerInZone;
     [SerializeField] private IntChange _action;
     
