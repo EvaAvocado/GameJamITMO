@@ -7,8 +7,13 @@ public class Ladder : MonoBehaviour
     [SerializeField] private LadderManager _ladderManager;
     [SerializeField] private Cooldown _cooldown;
     
+    [Header("UI")]
+    [SerializeField] private Animator _hintTextAnimator;
+    
     public bool playerInInteractionZone;
     public bool ownerInInteractionZone;
+    
+    private static readonly int IsHint = Animator.StringToHash("is-hint");
     
     public void DefaultMoveForPlayer(float direction)
     {
@@ -94,6 +99,9 @@ public class Ladder : MonoBehaviour
     public void SetPlayerInInteractionZone(bool status)
     {
         playerInInteractionZone = status;
+        
+        _hintTextAnimator.SetBool(IsHint, playerInInteractionZone);
+        
     }
     
     public void SetOwnerInInteractionZone(bool status)
