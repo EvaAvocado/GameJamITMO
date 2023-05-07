@@ -2,13 +2,19 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class PlaySoundsComponent : MonoBehaviour
 {
     [SerializeField] private AudioSource _source;
     [SerializeField] private AudioData[] _sounds;
-
     public Key key;
+    [SerializeField] private bool _isSongByPieces;
+
+    private AudioData _currentSound;
+
+    private float _dspSongTime;
+    private float _songPosition;
 
     public enum Key
     {
@@ -18,6 +24,14 @@ public class PlaySoundsComponent : MonoBehaviour
 
     private void Start()
     {
+        /*if (_isSongByPieces)
+        {
+            Play(_sounds[0].id);
+        }
+
+        _dspSongTime = (float) AudioSettings.dspTime;
+        */
+
         if (key == Key.Music)
         {
             if (PlayerPrefs.HasKey("MusicVolume"))
@@ -43,6 +57,62 @@ public class PlaySoundsComponent : MonoBehaviour
         }
     }
 
+    /*private void Update()
+    {
+        _songPosition = (float) (AudioSettings.dspTime - _dspSongTime);
+
+        if (_isSongByPieces)
+        {
+            if (!_source.isPlaying)
+            {
+                for (int i = 0; i < _sounds.Length; i++)
+                {
+                    if (_sounds[i].id != _currentSound.id) continue;
+
+                    Play(i + 1 >= _sounds.Length ? _sounds[0].id : _sounds[i + 1].id);
+
+                    break;
+                }
+            }
+        }
+
+        print("SongPosition: " + _songPosition);
+        print("Length: " + _currentSound.clip.length);
+    }*/
+
+
+    public void PlayRandomSoundComponent()
+    {
+        bool isNewClip = false;
+        int random = -1;
+
+        while (!isNewClip)
+        {
+            random = Random.Range(0, _sounds.Length);
+
+            if (_currentSound != _sounds[random])
+            {
+                isNewClip = true;
+            }
+        }
+
+        Play(_sounds[random].id);
+    }
+
+    /*public void PlaySoundAfterPiece(string id)
+    {
+        bool isCanPlay = false;
+
+        while (!isCanPlay)
+        {
+            if (_currentSound.clip.length - _songPosition <= 1)
+            {
+                isCanPlay = true;
+                Play(id);
+            }
+        }
+    }*/
+
 
     public void Play(string id)
     {
@@ -50,6 +120,7 @@ public class PlaySoundsComponent : MonoBehaviour
         {
             if (audioData.id != id) continue;
 
+            _currentSound = audioData;
             _source.PlayOneShot(audioData.clip);
             break;
         }
