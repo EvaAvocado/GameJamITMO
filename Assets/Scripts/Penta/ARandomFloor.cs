@@ -12,6 +12,7 @@ public class ARandomFloor : Amulet
     private void OnEnable()
     {
         _timer.TimeFloat = TimeSpan.FromSeconds(_cooldown.ValueOfCooldown).Seconds;
+        _timer.TimeBeforeApplyAction = _timer.TimeFloat;
     }
 
     private void Update()
@@ -31,6 +32,7 @@ public class ARandomFloor : Amulet
     public override void SetEffect()
     {
         _player.isCanToRandomFloor = true;
+        _timer.DoAction = true;
     }
 
     public override void Reset()

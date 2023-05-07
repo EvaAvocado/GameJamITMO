@@ -7,6 +7,7 @@ public class TimerComponent : MonoBehaviour
     [SerializeField] private float _time;
     [SerializeField] private bool _doAction = true;
     [SerializeField] private UnityEvent _action;
+    public bool test;
     
     private float _timeBeforeApplyAction;
 
@@ -49,6 +50,7 @@ public class TimerComponent : MonoBehaviour
     public void Timer()
     {
         _timeBeforeApplyAction -= Time.deltaTime;
+        
         if (_timeBeforeApplyAction < 0)
         {
             _timeBeforeApplyAction = _time;
