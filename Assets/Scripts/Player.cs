@@ -4,7 +4,8 @@ public class Player : Creature
 {
     [SerializeField] private float jumpHeight;
     [SerializeField] private bool isGrounded = true;
-    [SerializeField] public PlayerState playerState;
+    public PlayerState playerState;
+    public bool isCanToRandomFloor;
     
     public enum PlayerState
     {

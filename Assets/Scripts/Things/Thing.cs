@@ -83,7 +83,12 @@ public class Thing : MonoBehaviour
         currentClickCount = clickCount;
         _currentClickText.text = currentClickCount.ToString();
     }
-    
+
+    public void SetDefaultPoints()
+    {
+        currentClickCount = clickCount;
+    }
+
     public void SetIsPlayerInZone(bool status)
     {
         _isPlayerInZone = status;

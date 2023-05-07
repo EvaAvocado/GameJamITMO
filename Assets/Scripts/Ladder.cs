@@ -5,14 +5,14 @@ public class Ladder : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private Owner _owner;
     [SerializeField] private LadderManager _ladderManager;
-    
+
     public bool playerInInteractionZone;
     public bool ownerInInteractionZone;
-    
 
-    public void MoveToAnotherFloorForPlayer(float direction)
+    public void DefaultMoveForPlayer(float direction)
     {
-        if ((_player.currentFloor == Creature.CurrentFloor.First && direction >= 0.95) || (_player.currentFloor == Creature.CurrentFloor.Third && direction <= -0.95))
+        if ((_player.currentFloor == Creature.CurrentFloor.First && direction >= 0.95) ||
+            (_player.currentFloor == Creature.CurrentFloor.Third && direction <= -0.95))
         {
             TransferToSecondFloor(_player.gameObject);
         }
@@ -25,12 +25,53 @@ public class Ladder : MonoBehaviour
             TransferToFirstFloor(_player.gameObject);
         }
     }
-    
+
+    public void RandomMoveForPlayer(float direction)
+    {
+        if (_player.currentFloor == Creature.CurrentFloor.First && direction >= 0.95)
+        {
+            TransferToThirdFloor(_player.gameObject);
+        }
+        else if (_player.currentFloor == Creature.CurrentFloor.Third && direction <= -0.95)
+        {
+            TransferToFirstFloor(_player.gameObject);
+        }
+        else if (_player.currentFloor == Creature.CurrentFloor.Second && direction >= 0.95)
+        {
+            TransferToFirstFloor(_player.gameObject);
+        }
+        else if (_player.currentFloor == Creature.CurrentFloor.Second && direction <= -0.95)
+        {
+            TransferToThirdFloor(_player.gameObject);
+        }
+    }
+
+    public void MoveToAnotherFloorForPlayer(float direction)
+    {
+        if (!_player.isCanToRandomFloor)
+        {
+            DefaultMoveForPlayer(direction);
+        }
+        else
+        {
+            int random = Random.Range(0, 2);
+            if (random == 0)
+            {
+                DefaultMoveForPlayer(direction);
+            }
+            else
+            {
+                RandomMoveForPlayer(direction);
+            }
+        }
+    }
+
     public void MoveToAnotherFloorForNpc()
     {
         var randomFloor = Random.Range(0, 2); // => [0;2)
-        
-        if ((_owner.currentFloor == Creature.CurrentFloor.First) || (_owner.currentFloor == Creature.CurrentFloor.Third))
+
+        if ((_owner.currentFloor == Creature.CurrentFloor.First) ||
+            (_owner.currentFloor == Creature.CurrentFloor.Third))
         {
             TransferToSecondFloor(_owner.gameObject);
         }
@@ -48,11 +89,11 @@ public class Ladder : MonoBehaviour
     {
         playerInInteractionZone = status;
     }
-    
+
     public void SetOwnerInInteractionZone(bool status)
     {
         ownerInInteractionZone = status;
-        
+
         if (ownerInInteractionZone && _owner.isCanMoveToAnotherFloor)
         {
             MoveToAnotherFloorForNpc();
