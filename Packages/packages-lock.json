@@ -1,12 +1,5 @@
 {
   "dependencies": {
-    "com.dungeongames.vkgames": {
-      "version": "https://github.com/punisherpete/com.dungeongames.vkgames.git#2.0.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "156ca8000c4428ab6e52976418da3489bf91c973"
-    },
     "com.unity.2d.animation": {
       "version": "7.0.10",
       "depth": 0,
