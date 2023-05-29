@@ -4,18 +4,20 @@ public class PatrollingState : IState
 {
     private Transform[] _patrolPoints;
     private Animator _animator;
-    private OwnerAi _ownerAi;
+    private EnemyAi _enemyAi;
     
     private int _currentPatrolIndex;
     private float _currentSpeed;
+    private float _patrolDuration = 10f;
     private float _possibleError = 0.2f;
     private Vector3 _currentDestination;
 
-    public PatrollingState(OwnerAi ownerAi, Animator animator, Transform[] patrolPoints)
+    public PatrollingState(EnemyAi enemyAi, Animator animator, Transform[] patrolPoints, float patrolDuration)
     {
-        _ownerAi = ownerAi;
+        _enemyAi = enemyAi;
         _animator = animator;
         _patrolPoints = patrolPoints;
+        _patrolDuration = patrolDuration;
     }
     
     public void OnEnter()
@@ -28,37 +30,39 @@ public class PatrollingState : IState
 
     public void Tick()
     {
+        _enemyAi.CalculateElapsedTime();
+        
         MoveToDestination();
         CheckReachedDestination();
     }
 
     public void OnExit()
     {
-        
+        _enemyAi._timeElapsed = 0f;
     }
     
     private void UpdateAnimationSpeed()
     {
-        _currentSpeed = _ownerAi.GetSpeed(); 
+        _currentSpeed = _enemyAi.GetSpeed(); 
         _animator.SetFloat(HashAnimation.Speed, _currentSpeed);
     }
     
     private void MoveToDestination()
     {
-        Vector3 position = _ownerAi.transform.position;
+        Vector3 position = _enemyAi.transform.position;
         
         _animator.SetFloat(HashAnimation.Speed, _currentSpeed);
         
         Vector3 direction = (_currentDestination - position).normalized;
         position += direction * _currentSpeed * Time.deltaTime;
-        _ownerAi.transform.position = position;
+        _enemyAi.transform.position = position;
         
-        Flip(direction.x > 0 ? true : false);
+        Flip(!(direction.x > 0));
     }
 
     private void CheckReachedDestination()
     {
-        float distance = Vector3.Distance(_ownerAi.transform.position, _currentDestination);
+        float distance = Vector3.Distance(_enemyAi.transform.position, _currentDestination);
         
         if (distance <= _possibleError)
         {
@@ -69,11 +73,8 @@ public class PatrollingState : IState
     
     private void Flip(bool shouldFlip)
     {
-        // Изменяем направление взгляда врага
-        Vector3 scale = _ownerAi.transform.localScale;
-        
+        Vector3 scale = _enemyAi.transform.localScale;
         scale.x = shouldFlip ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
-
-        _ownerAi.transform.localScale = scale;
+        _enemyAi.transform.localScale = scale;
     }
 }

@@ -2,60 +2,52 @@
 
 public class IdleState : IState
 {
-    private float _timeElapsed; // Время, прошедшее с начала Idle
-    private float _idleDuration; // Длительность одного цикла Idle
+    private float _idleDuration = 3f; // Длительность одного цикла Idle
     private bool _isFacingRight; // Флаг, указывающий на необходимость поворота врага
     
     private Animator _animator;
-    private OwnerAi _ownerAi;
+    private EnemyAi _enemyAi;
     private float _currentSpeed;
 
-    public IdleState(Animator animator, OwnerAi ownerAi, float idleDuration)
+    public IdleState(EnemyAi enemyAi, Animator animator,float idleDuration)
     {
+        _enemyAi = enemyAi;
         _animator = animator;
-        _ownerAi = ownerAi;
         _idleDuration = idleDuration;
     }
 
     public void OnEnter()
     {
-        //_animator.SetBool(HashAnimation.IsIdle, true);
-        UpdateAnimationSpeed();
-        
-        _timeElapsed = 0;
+        _currentSpeed = 0;
+        _animator.SetFloat(HashAnimation.Speed, _currentSpeed);
     }
 
     public void Tick()
     {
-        _timeElapsed += Time.deltaTime;
+        _enemyAi.CalculateElapsedTime();
+        //походу надо поменять _timeElapsed на внутренюю переменную
+        if (!(_enemyAi._timeElapsed >= _idleDuration)) return;
 
-        if (!(_timeElapsed >= _idleDuration)) return;
-
-        UpdateAnimationSpeed();
-        
-        _timeElapsed = 0;
         _isFacingRight = !_isFacingRight;
         Flip();
     }
     
     public void OnExit()
     {
-        UpdateAnimationSpeed();
-        
-        _timeElapsed = 0;
+        _enemyAi._timeElapsed = 0f;
     }
 
     private void Flip()
     {
         // Изменяем направление взгляда врага
-        Vector3 scale = _ownerAi.transform.localScale;
+        Vector3 scale = _enemyAi.transform.localScale;
         scale.x *= -1;
-        _ownerAi.transform.localScale = scale;
+        _enemyAi.transform.localScale = scale;
     }
 
     private void UpdateAnimationSpeed()
     {
-        _currentSpeed = _ownerAi.GetSpeed(); 
+        _currentSpeed = _enemyAi.GetSpeed(); 
         _animator.SetFloat(HashAnimation.Speed, _currentSpeed);
     }
 }
