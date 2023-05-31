@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using TMPro;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using static Creature;
 using Random = UnityEngine.Random;
 
 public class OwnerAi : Owner
@@ -26,7 +23,7 @@ public class OwnerAi : Owner
     [SerializeField] private float _maxPatrolDuration = 30f;
     [SerializeField] private float _speedIncrease = 6f;
 
-    public UnityEvent catchPlayerAction;
+    public UnityEvent _catchPlayerAction;
 
     private int _randomPoint1;
     private int _randomPoint2;
@@ -76,6 +73,11 @@ public class OwnerAi : Owner
             isCanMoveToAnotherFloor = true;
     }
 
+    public float GetSpeed()
+    {
+        return Speed;
+    }
+
     public void IdleState()
     {
         if (_coroutine != null)
@@ -118,7 +120,7 @@ public class OwnerAi : Owner
         }
     }
 
-    public void Attack()
+    private void Attack()
     {
         //меняется анимация с хотьбы на бег
 
@@ -165,14 +167,13 @@ public class OwnerAi : Owner
         {
             Vector2 currentPosition = transform.position;
 
-            transform.position =
-                Vector2.MoveTowards(transform.position, _target.position, CurrentSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _target.position, CurrentSpeed * Time.deltaTime);
             transform.position = new Vector3(transform.position.x, currentPosition.y, transform.position.z);
 
             if (transform.position.x <= _target.position.x)
             {
                 //анимация ловли кота
-                catchPlayerAction?.Invoke();
+                _catchPlayerAction?.Invoke();
             }
 
             yield return new WaitForSeconds(10f);
