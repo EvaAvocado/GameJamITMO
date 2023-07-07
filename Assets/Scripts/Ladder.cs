@@ -73,7 +73,6 @@ public class Ladder : MonoBehaviour
 
     public void MoveToAnotherFloorForNpc()
     {
-        print("зашел!!!!");
         var randomFloor = Random.Range(0, 2); // => [0;2)
 
         if ((_owner.currentFloor == Creature.CurrentFloor.First) ||
@@ -82,21 +81,18 @@ public class Ladder : MonoBehaviour
             TransferToSecondFloor(_owner.gameObject);
             _cooldown.Reset();
             _owner.isCanMoveToAnotherFloor = false;
-            print("зашел");
         }
         else if (randomFloor == 0)
         {
             TransferToThirdFloor(_owner.gameObject);
             _cooldown.Reset();
             _owner.isCanMoveToAnotherFloor = false;
-            print("зашел2");
         }
         else
         {
             TransferToFirstFloor(_owner.gameObject);
             _cooldown.Reset();
             _owner.isCanMoveToAnotherFloor = false;
-            print("зашел2");
         }
     }
 

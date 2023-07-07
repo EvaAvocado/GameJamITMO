@@ -2,47 +2,54 @@
 
 public class IdleState : IState
 {
-    private float _idleDuration = 3f; // Длительность одного цикла Idle
-    private bool _isFacingRight; // Флаг, указывающий на необходимость поворота врага
+    private float _turnDuration = 3f;
+    private float _turnElapsed = 0f;
+    private bool _isFacingRight;
     
     private Animator _animator;
     private EnemyAi _enemyAi;
     private float _currentSpeed;
 
-    public IdleState(EnemyAi enemyAi, Animator animator,float idleDuration)
+    public IdleState(EnemyAi enemyAi, Animator animator)
     {
         _enemyAi = enemyAi;
         _animator = animator;
-        _idleDuration = idleDuration;
     }
 
     public void OnEnter()
     {
-        _currentSpeed = 0;
+        _currentSpeed = 0f;
+        _turnElapsed = 0f;
+        _enemyAi.ResetTimeElapsed();
         _animator.SetFloat(HashAnimation.Speed, _currentSpeed);
     }
 
     public void Tick()
     {
         _enemyAi.CalculateElapsedTime();
+        _turnElapsed += Time.deltaTime;
         //походу надо поменять _timeElapsed на внутренюю переменную
-        if (!(_enemyAi._timeElapsed >= _idleDuration)) return;
-
-        _isFacingRight = !_isFacingRight;
-        Flip();
+        if (_turnElapsed >= _turnDuration)
+        {
+            _turnElapsed = 0f;
+            _isFacingRight = !_isFacingRight;
+            Flip();
+        }
     }
     
     public void OnExit()
     {
-        _enemyAi._timeElapsed = 0f;
+        _turnElapsed = 0f;
+        _enemyAi.ResetTimeElapsed();
     }
 
     private void Flip()
     {
         // Изменяем направление взгляда врага
-        Vector3 scale = _enemyAi.transform.localScale;
+        var transform = _enemyAi.transform;
+        Vector3 scale = transform.localScale;
         scale.x *= -1;
-        _enemyAi.transform.localScale = scale;
+        transform.localScale = scale;
     }
 
     private void UpdateAnimationSpeed()
